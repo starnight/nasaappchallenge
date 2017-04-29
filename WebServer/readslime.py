@@ -3,6 +3,8 @@
 import csv
 from axeschange import lon2col, lat2row
 
+# These data come from NASA Earth Observations (NEO)
+# https://neo.sci.gsfc.nasa.gov/view.php?datasetId=MY1DMW_CHLORA&date=2017-03-01
 filenames = ["data/MY1DMW_CHLORA_2017-02-02_rgb_3600x1800.CSV",
 			 "data/MY1DMW_CHLORA_2017-02-10_rgb_3600x1800.CSV",
 			 "data/MY1DMW_CHLORA_2017-02-18_rgb_3600x1800.CSV",
