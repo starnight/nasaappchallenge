@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from bottle import route, run, static_file
+from readslime import BuildChlorophyllDataSets, GetChlorophyll
 
 @route('/')
 @route('/hello')
@@ -17,7 +18,7 @@ def send_static(filename):
 
 @route('/GetChlorophyll/<date>/<lon:float>/<lat:float>')
 def getChlorophyll(date, lon, lat):
-	return data[date][lon][lat]
+	return GetChlorophyll(date, lon, lat)
 
 @route('/GetOceanSurfaceTemp/<date>/<lon:float>/<lat:float>')
 def getOceanSurfaceTemp(date, lon, lat):
@@ -28,4 +29,9 @@ def getUV(date, lon, lat):
 	return data[date][lon][lat]
 
 if __name__ == "__main__":
+	# Build data sets
+	print("Building Chlorophyll data sets ...")
+	BuildChlorophyllDataSets()
+
+	# Run the web server
 	run(host='0.0.0.0', port=8080, debug=True)
