@@ -15,15 +15,15 @@ def keyin(key, val):
 def send_static(filename):
 	return static_file(filename, root='static')
 
-@route('/GetChlorophyll/<date:float>/<lon:float>/<lat:float>')
+@route('/GetChlorophyll/<date>/<lon:float>/<lat:float>')
 def getChlorophyll(date, lon, lat):
 	return data[date][lon][lat]
 
-@route('/GetOceanSurfaceTemp/<date:float>/<lon:float>/<lat:float>')
+@route('/GetOceanSurfaceTemp/<date>/<lon:float>/<lat:float>')
 def getOceanSurfaceTemp(date, lon, lat):
 	return data[date][lon][lat]
 
-@route('/GetUV/<date:float>/<lon:float>/<lat:float>')
+@route('/GetUV/<date>/<lon:float>/<lat:float>')
 def getUV(date, lon, lat):
 	return data[date][lon][lat]
 
