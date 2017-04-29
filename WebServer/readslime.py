@@ -3,6 +3,12 @@
 import csv
 from axeschange import lon2col, lat2row
 
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
+from math import floor, ceil
+
 # These data come from NASA Earth Observations (NEO)
 # https://neo.sci.gsfc.nasa.gov/view.php?datasetId=MY1DMW_CHLORA&date=2017-03-01
 filenames = ["data/MY1DMW_CHLORA_2017-02-02_rgb_3600x1800.CSV",
@@ -22,7 +28,10 @@ def build1DataSet(filename):
 
 	d = []
 	for row in datareader:
-		d.append(row)
+		c = []
+		for col in row:
+			c.append(float(col))
+		d.append(c)
 
 	data.append(d)
 
@@ -48,6 +57,34 @@ def GetChlorophyll(date, lon, lat):
 	idx = date2set(date)
 	return data[idx][row][col]
 
+
+def getZ(i, x, y):
+	ix = int(round(x*10)) + 1800
+	iy = -(int(round(y*10)) - 900)
+	z = data[i][iy][ix]
+	if z == 99999.0:
+		z = 0.0
+	#print("x: {0}, y:{1}, z:{2}".format(ix, iy, z))
+	return z
+
+def plotRegion(i, x, y):
+	lon = np.arange(floor(x[0]), ceil(x[1]), 0.1)
+	lat = np.arange(ceil(y[1]), floor(y[0]), -0.1)
+	X, Y = np.meshgrid(lon, lat)
+
+	z = np.array([getZ(i, x,y) for x,y in zip(np.ravel(X), np.ravel(Y))])
+	Z = z.reshape(X.shape)
+	
+	fig = plt.figure()
+	ax = fig.gca(projection='3d')
+	surf = ax.plot_surface(X, Y, Z)
+
+	plt.xlabel("Longitude")
+	plt.ylabel("Latitude")
+	plt.title("Chlorophyll Concentration")
+	plt.show()
+	plt.close()
+	
 if __name__ == "__main__":
 	BuildChlorophyllDataSets()
 
@@ -56,3 +93,8 @@ if __name__ == "__main__":
 		print(len(d))
 	
 	print(data[7][1799][3599])
+	
+	
+	for i in range(len(data)):
+		print(i)
+		plotRegion(i, [31.31, 104.57], [-23.43, 44.04])
