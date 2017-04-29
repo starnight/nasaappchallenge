@@ -56,6 +56,10 @@ def get_ocean_surface_temp(date,lat,lon):
 
 # CERES_INSOL_M_2017-03-01_rgb_1440x720.SS.CSV
 
+def get_solar_insolation(date,lat,lon):
+	# 0~550
+	return _get_value(date,'solar_insolation',lat,lon)
+
 def get_gfs_temp(date,lat,lon):
 	k = _get_value(date,'gfs_temp',lat,lon)
 	c = float(k) - 273.15
@@ -87,9 +91,9 @@ def map_to_direction(degree):
 if __name__ == '__main__':
 	build_data_file()
 	args = ('20170301',21.943973, 120.795837)
-	# print(get_ocean_surface_temp(*args))
-	# print(get_solar_insolation(*args))
-	# print(map_to_direction(235))
+	print(get_ocean_surface_temp(*args))
+	print(get_solar_insolation(*args))
+	print(map_to_direction(235))
 	print(get_gfs_wind_direction(*args))
 	print(get_gfs_wind_speed(*args))
 	print(get_gfs_temp(*args))
