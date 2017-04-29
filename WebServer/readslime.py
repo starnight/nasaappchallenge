@@ -55,8 +55,7 @@ def GetChlorophyll(date, lon, lat):
 	col = lon2col(lon)
 	row = lat2row(lat)
 	idx = date2set(date)
-	return data[idx][row][col]
-
+	return "%.5f" % data[idx][row][col]
 
 def getZ(i, x, y):
 	ix = int(round(x*10)) + 1800
@@ -74,7 +73,6 @@ def plotRegion(i, x, y):
 
 	z = np.array([getZ(i, x,y) for x,y in zip(np.ravel(X), np.ravel(Y))])
 	Z = z.reshape(X.shape)
-	N = Z/Z.max()
 	
 	fig = plt.figure()
 	ax = fig.gca(projection='3d')
