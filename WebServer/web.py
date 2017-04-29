@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-from bottle import route, run, static_file
+from bottle import route, run, static_file, response
+from json import dumps
 from readslime import BuildChlorophyllDataSets, GetChlorophyll
 from yli88 import get_ocean_surface_temp,get_solar_insolation
 
@@ -39,11 +40,13 @@ def getUV(date, lon, lat):
 
 @route('/GetTide/<date>/<lon:float>/<lat:float>')
 def getTide(date, lon, lat):
-	return data[date][lon][lat]
+	response.content_type = "application/json"
+	return dumps({"tide": {"hour": [0, 1], "height": [5, 6, 5, 6, 7, 6, 5, 4]}}) #data[date][lon][lat]
 
 @route('/GetWind/<date>/<lon:float>/<lat:float>')
 def getWind(date, lon, lat):
-	return data[date][lon][lat]
+	response.content_type = "application/json"
+	return dumps({"wind": {"hour": [0, 1, 2, 3, 4, 5, 6, 7], "direction": ["WS", "W"], "strength": [1, 2]}}) #data[date][lon][lat]
 
 @route('/GetEscherichiacoli/<date>/<lon:float>/<lat:float>')
 def getEscherichiacoli(date, lon, lat):
