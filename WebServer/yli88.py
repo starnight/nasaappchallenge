@@ -1,11 +1,12 @@
 import bisect
+import os
 
 def _get_data_file(date,category):
 	dataset = {
 		'ocean_surface_temp': 'MYD28W_2017-03-22_rgb_3600x1800.SS.CSV',
 		'solar_insolation':'CERES_INSOL_D_2017-04-19_rgb_1440x720.SS.CSV',
 	}
-	return dataset[category]
+	return os.path.join('data',dataset[category])
 
 
 def _map_to_cord(data_src,lat,lon):
