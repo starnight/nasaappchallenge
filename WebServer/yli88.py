@@ -66,7 +66,7 @@ def get_gfs_temp(date,lat,lon):
 	return str(c)
 
 def get_gfs_wind_speed(date,lat,lon):
-	return _get_value(date,'gfs_wind_speed',lat,lon)
+	return float(_get_value(date,'gfs_wind_speed',lat,lon))
 
 def get_gfs_wind_direction(date,lat,lon):
 	u = _get_value(date,'gfs_wind_u',lat,lon)
