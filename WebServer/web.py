@@ -3,7 +3,7 @@
 from bottle import route, run, static_file, response
 from json import dumps
 from readslime import BuildChlorophyllDataSets, GetChlorophyll
-from yli88 import get_ocean_surface_temp,get_solar_insolation
+from yli88 import build_data_file,get_ocean_surface_temp,get_solar_insolation,get_gfs_temp,get_gfs_wind_speed,get_gfs_wind_direction
 
 @route('/')
 @route('/hello')
@@ -28,7 +28,7 @@ def getOceanSurfaceTemp(date, lon, lat):
 
 @route('/GetAirTemp/<date>/<lon:float>/<lat:float>')
 def getAirTemp(date, lon, lat):
-	return data[date][lon][lat]
+	return get_gfs_temp(date,lat,lon)
 
 @route('/GetSolarInsolation/<date>/<lon:float>/<lat:float>')
 def getSolarInsolation(date, lon, lat):
@@ -46,7 +46,7 @@ def getTide(date, lon, lat):
 @route('/GetWind/<date>/<lon:float>/<lat:float>')
 def getWind(date, lon, lat):
 	response.content_type = "application/json"
-	return dumps({"wind": {"hour": [0, 1, 2, 3, 4, 5, 6, 7], "direction": ["WS", "W"], "strength": [1, 2]}}) #data[date][lon][lat]
+	return dumps({"wind": {"hour": [0, 1], "direction": [get_gfs_wind_direction(date,lat,lon), "W"], "speed": [get_gfs_wind_speed(date,lat,lon), 2]}}) #data[date][lon][lat]
 
 @route('/GetEscherichiacoli/<date>/<lon:float>/<lat:float>')
 def getEscherichiacoli(date, lon, lat):
@@ -61,6 +61,7 @@ if __name__ == "__main__":
 	# Build data sets
 	print("Building Chlorophyll data sets ...")
 	BuildChlorophyllDataSets()
+	build_data_file()
 
 	# Run the web server
 	run(host='0.0.0.0', port=8080, debug=True)
