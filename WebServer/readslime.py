@@ -74,6 +74,7 @@ def plotRegion(i, x, y):
 
 	z = np.array([getZ(i, x,y) for x,y in zip(np.ravel(X), np.ravel(Y))])
 	Z = z.reshape(X.shape)
+	N = Z/Z.max()
 	
 	fig = plt.figure()
 	ax = fig.gca(projection='3d')
@@ -81,7 +82,7 @@ def plotRegion(i, x, y):
 
 	plt.xlabel("Longitude")
 	plt.ylabel("Latitude")
-	plt.title("Chlorophyll Concentration")
+	plt.title("Chlorophyll Concentration (mg/m^3)")
 	plt.show()
 	plt.close()
 	
@@ -95,6 +96,6 @@ if __name__ == "__main__":
 	print(data[7][1799][3599])
 	
 	
-	for i in range(len(data)):
-		print(i)
-		plotRegion(i, [31.31, 104.57], [-23.43, 44.04])
+	#for i in range(len(data)):
+	#	print(i)
+	plotRegion(1, [31.31, 104.57], [-23.43, 44.04])
