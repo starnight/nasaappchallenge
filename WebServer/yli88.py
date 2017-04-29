@@ -63,7 +63,7 @@ def get_solar_insolation(date,lat,lon):
 def get_gfs_temp(date,lat,lon):
 	k = _get_value(date,'gfs_temp',lat,lon)
 	c = float(k) - 273.15
-	return c
+	return str(c)
 
 def get_gfs_wind_speed(date,lat,lon):
 	return _get_value(date,'gfs_wind_speed',lat,lon)
