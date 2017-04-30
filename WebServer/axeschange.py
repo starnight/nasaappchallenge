@@ -8,7 +8,7 @@ def haveLonDoamin():
 		lon_domain.append(i)
 
 def haveLatDomain():
-	for i in range(-900, 900):
+	for i in range(-899, 901):
 		lat_domain.append(-i)
 
 haveLonDoamin()
